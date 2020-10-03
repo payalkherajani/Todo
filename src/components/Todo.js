@@ -4,12 +4,62 @@ import FormatListBulletedSharpIcon from "@material-ui/icons/FormatListBulletedSh
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
+class TodoElement extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEditing: false,
+      val: this.props.item,
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.isEditing === true ? (
+          <div>
+            <input
+              type="text"
+              value={this.state.val}
+              onChange={(e) => this.setState({ val: e.target.value })}
+            />
+            <button
+              type="submit"
+              onClick={() => {
+                this.setState({ isEditing: false });
+              }}
+            >
+              Edit
+            </button>
+          </div>
+        ) : (
+          <div>{this.state.val}</div>
+        )}
+        <IconButton
+          aria-label="edit"
+          onClick={() => {
+            this.setState({ isEditing: true });
+          }}
+        >
+          <EditIcon fontSize="small" />
+        </IconButton>
+        <IconButton
+          aria-label="delete"
+          onClick={() => this.props.del(this.props.index)}
+        >
+          <DeleteIcon fontSize="small" />
+        </IconButton>
+      </div>
+    );
+  }
+}
 class Todo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       task: "",
       todo: [],
+      newVal: "",
     };
   }
 
@@ -17,29 +67,27 @@ class Todo extends React.Component {
     this.setState({ task: e.target.value });
   };
 
-  //   displayTodo = () => {
-  //     const todoList = this.state.todo;
-  //     console.log(todoList);
-  //     if (todoList.length !== 0) {
-  //       todoList.map((item) => {
-  //         return <div>{item}</div>;
-  //       });
-  //     } else {
-  //       return;
-  //     }
-  //   };
   addTask = () => {
     this.setState({ todo: [...this.state.todo, this.state.task] });
     this.setState({ task: "" });
   };
+  editFun = (item, index) => {
+    const edTodo = [...this.state.todo];
+    // edTodo.map((e) => {
+    //   if (e === item) {
+    //     <TextField label={e} />;
+    //   }
+    // });
 
-  editFun = (item) => {
-    console.log("EDIT", item);
+    // this.setState({ todo: edTodo });
   };
 
-  del = (item) => {
-    console.log("DELETE", this.state);
+  del = (index) => {
+    const delTodo = [...this.state.todo];
+    delTodo.splice(index, 1);
+    this.setState({ todo: delTodo });
   };
+
   render() {
     return (
       <div>
@@ -62,20 +110,22 @@ class Todo extends React.Component {
         <Grid container direction="column">
           {" "}
           {this.state.todo.length !== 0
-            ? this.state.todo.map((item) => {
+            ? this.state.todo.map((item, index) => {
+                const f = () => {
+                  this.editFun(item, index);
+                };
                 return (
                   <div key={item}>
-                    {item}
-                    <IconButton aria-label="edit" onClick={this.editFun(item)}>
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton aria-label="delete" onClick={this.del(item)}>
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
+                    <TodoElement
+                      item={item}
+                      index={index}
+                      edit={this.editFun}
+                      del={this.del}
+                    />
                   </div>
                 );
               })
-            : console.log("Empty Array")}
+            : null}
         </Grid>
       </div>
     );
