@@ -12,11 +12,28 @@ class Todo extends React.Component {
     };
   }
 
+  edit = (id, value) => {
+    console.log(this.state.todo);
+    const newTodo = [...this.state.todo].map((tod, index) => {
+      console.log(tod, index);
+      if (index === id) {
+        tod = value;
+      }
+      return tod;
+    });
+
+    this.setState({
+      todo: newTodo,
+    });
+
+    console.log(newTodo);
+  };
   handleChange = (e) => {
     this.setState({ task: e.target.value });
   };
 
   addTask = () => {
+    // const newItem = {id: new Date() }
     this.setState({ todo: [...this.state.todo, this.state.task] });
     this.setState({ task: "" });
   };
@@ -26,7 +43,9 @@ class Todo extends React.Component {
     delTodo.splice(index, 1);
     this.setState({ todo: delTodo });
   };
-
+  // edit = () => {
+  //   this.setState({todo: todo})
+  // }
   render() {
     return (
       <div>
@@ -56,7 +75,7 @@ class Todo extends React.Component {
                       item={item}
                       index={index}
                       del={this.del}
-                      edit={this.state.todo}
+                      edit={this.edit}
                     />
                   </div>
                 );

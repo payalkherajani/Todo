@@ -27,17 +27,7 @@ class TodoElement extends React.Component {
             <button
               type="submit"
               onClick={() => {
-                const todo = this.state.newTodo;
-                const exactItem = this.state.newTodo[this.props.index];
-                // console.log(this.state.val, exactItem, this.props.index);
-                todo.map((t) => {
-                  if (t === exactItem) {
-                    this.setState({
-                      t: this.state.val,
-                    });
-                  }
-                });
-                this.setState({ isEditing: false });
+                this.props.edit(this.props.index, this.state.val);
               }}
             >
               Edit
