@@ -1,86 +1,102 @@
-import React from "react";
-import { Grid, TextField, Button } from "@material-ui/core";
-import FormatListBulletedSharpIcon from "@material-ui/icons/FormatListBulletedSharp";
-import TodoElement from "./TodoElement";
+import React, { Component } from "react";
+import TodoElement from "./TodoElement.js";
 
-class Todo extends React.Component {
+//Material Ui
+import { Grid, Box, Button, TextField } from "@material-ui/core";
+
+class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      task: "",
       todo: [],
+      currentTask: {
+        task: "",
+        id: "",
+      },
     };
   }
 
-  edit = (id, value) => {
-    console.log(this.state.todo);
-    const newTodo = [...this.state.todo].map((tod, index) => {
-      console.log(tod, index);
-      if (index === id) {
-        tod = value;
-      }
-      return tod;
-    });
-
-    this.setState({
-      todo: newTodo,
-    });
-
-    console.log(newTodo);
-  };
   handleChange = (e) => {
-    this.setState({ task: e.target.value });
+    this.setState({
+      currentTask: {
+        task: e.target.value,
+        id: Date.now(),
+      },
+    });
   };
 
-  addTask = () => {
-    // const newItem = {id: new Date() }
-    this.setState({ todo: [...this.state.todo, this.state.task] });
-    this.setState({ task: "" });
+  addItem = () => {
+    const newTask = this.state.currentTask;
+    if (newTask.task !== "") {
+      const newtodo = [...this.state.todo, newTask];
+      this.setState({
+        todo: newtodo,
+        currentTask: {
+          task: "",
+          id: "",
+        },
+      });
+    }
   };
 
-  del = (index) => {
-    const delTodo = [...this.state.todo];
-    delTodo.splice(index, 1);
+  deleteTask = (cid) => {
+    const delTodo = [...this.state.todo].filter((dtod) => dtod.id !== cid);
     this.setState({ todo: delTodo });
   };
-  // edit = () => {
-  //   this.setState({todo: todo})
-  // }
+
+  editTodo = (cid, val) => {
+    const edTodo = [...this.state.todo].map((edtodo) => {
+      if (edtodo.id === cid) {
+        edtodo.task = val;
+      }
+      return edtodo;
+    });
+    console.log(edTodo);
+    this.setState({
+      todo: edTodo,
+    });
+  };
   render() {
     return (
       <div>
-        <Grid container spacing={1} alignItems="flex-end">
+        <Grid container>
           <Grid item>
-            <FormatListBulletedSharpIcon />
+            <Box>
+              <TextField
+                label="Todo"
+                variant="outlined"
+                value={this.state.currentTask.task}
+                onChange={this.handleChange}
+              ></TextField>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={this.addItem}
+              >
+                Add
+              </Button>
+            </Box>
           </Grid>
-          <Grid item>
-            <TextField
-              label="Task"
-              value={this.state.task}
-              onChange={this.handleChange}
-            />
-            <Button variant="contained" color="primary" onClick={this.addTask}>
-              Add Task
-            </Button>
+          <Grid container>
+            {this.state.todo.length !== 0
+              ? this.state.todo.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <TodoElement
+                        item={item}
+                        deleteTask={this.deleteTask}
+                        editTodo={this.editTodo}
+                      />
+                    </div>
+                  );
+                })
+              : null}
+            {/* <TodoElement
+              todo={this.state.todo}
+              deleteTask={this.deleteTask}
+              editTask={this.edTodo}
+            /> */}
           </Grid>
-        </Grid>
-        <Grid></Grid>
-        <Grid container direction="column">
-          {" "}
-          {this.state.todo.length !== 0
-            ? this.state.todo.map((item, index) => {
-                return (
-                  <div key={item}>
-                    <TodoElement
-                      item={item}
-                      index={index}
-                      del={this.del}
-                      edit={this.edit}
-                    />
-                  </div>
-                );
-              })
-            : null}
         </Grid>
       </div>
     );
