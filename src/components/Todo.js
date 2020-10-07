@@ -4,8 +4,42 @@ import TodoElement from "./TodoElement.js";
 
 //Material Ui
 import { withStyles } from "@material-ui/styles";
-import { Grid, Box, Button, TextField } from "@material-ui/core";
+import { Grid, Box, Button, TextField, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const styles = () => ({
   maindiv: {
@@ -21,12 +55,18 @@ class Todo extends Component {
     super(props);
     this.state = {
       todo: [],
+      deleteTodo: [],
+      value: 0,
       currentTask: {
         task: "",
         id: "",
       },
     };
   }
+
+  tabhandleChange = (event, newValue) => {
+    this.setState({ value: newValue });
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -53,7 +93,15 @@ class Todo extends Component {
 
   deleteTask = (cid) => {
     const delTodo = [...this.state.todo].filter((dtod) => dtod.id !== cid);
+
+    [...this.state.todo].forEach((d) => {
+      if (d.id === cid) {
+        this.state.deleteTodo.push(d);
+      }
+    });
+
     this.setState({ todo: delTodo });
+    this.setState({ deleteTodo: this.state.deleteTodo });
   };
 
   editTodo = (cid, val) => {
@@ -63,7 +111,7 @@ class Todo extends Component {
       }
       return edtodo;
     });
-    console.log(edTodo);
+
     this.setState({
       todo: edTodo,
     });
@@ -97,25 +145,79 @@ class Todo extends Component {
             </Box>
           </Grid>
           <Grid item>
-            {this.state.todo.length !== 0
-              ? this.state.todo.map((item, index) => {
-                  return (
-                    <div key={item.id}>
-                      <TodoElement
-                        item={item}
-                        deleteTask={this.deleteTask}
-                        editTodo={this.editTodo}
-                      />
-                    </div>
-                  );
-                })
-              : null}
-            {/* <TodoElement
-              todo={this.state.todo}
-              deleteTask={this.deleteTask}
-              editTask={this.edTodo}
-            /> */}
+            <AppBar position="static" color="default">
+              <Tabs
+                value={this.state.value}
+                onChange={this.tabhandleChange}
+                aria-label="simple tabs example"
+              >
+                <Tab label="All" {...a11yProps(0)} />
+                <Tab label="Active" {...a11yProps(1)} />
+                <Tab label="Completed" {...a11yProps(2)} />
+              </Tabs>
+            </AppBar>
+            <TabPanel value={this.state.value} index={0}>
+              {this.state.todo.length !== 0
+                ? this.state.todo.map((item, index) => {
+                    return (
+                      <div key={item.id}>
+                        <TodoElement
+                          item={item}
+                          deleteTask={this.deleteTask}
+                          editTodo={this.editTodo}
+                        />
+                      </div>
+                    );
+                  })
+                : null}
+            </TabPanel>
           </Grid>
+          <Box>
+            <TabPanel value={this.state.value} index={1}>
+              {this.state.todo.length !== 0
+                ? this.state.todo.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        style={{
+                          color: "#f50057",
+                          fontSize: "20px",
+                          textTransform: "uppercase",
+                          padding: "10px",
+                        }}
+                      >
+                        {item.task}
+                      </div>
+                    );
+                  })
+                : null}
+            </TabPanel>
+            <TabPanel value={this.state.value} index={2}>
+              {this.state.deleteTodo.length !== 0 ? (
+                <div>
+                  {this.state.deleteTodo.map((item, index) => {
+                    if (item !== undefined) {
+                      return (
+                        <div
+                          key={index}
+                          style={{
+                            color: "#f50057",
+                            fontSize: "20px",
+                            textTransform: "uppercase",
+                            padding: "10px",
+                          }}
+                        >
+                          {item.task}
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+              ) : (
+                <p> No Task Deleted </p>
+              )}
+            </TabPanel>
+          </Box>
         </Grid>
       </Box>
     );
