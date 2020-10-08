@@ -27,16 +27,12 @@ class TodoElement extends Component {
     super(props);
     this.state = {
       isEditing: false,
-      val: this.props.item,
-      checked: false,
+      val: this.props.item.task,
     };
   }
 
-  checkhandleChange = (event) => {
-    this.setState({ checked: event.target.checked });
-  };
-
   render() {
+    // console.log(this.props.item);
     const { classes } = this.props;
     return (
       <Grid
@@ -49,14 +45,14 @@ class TodoElement extends Component {
           <Grid item style={{ display: "flex", gap: "10px" }}>
             <input
               type="text"
-              value={this.state.val.task}
+              value={this.state.val}
               onChange={(e) => this.setState({ val: e.target.value })}
               className={classes.text}
             />
             <button
               type="submit"
               onClick={() => {
-                this.props.editTodo(this.props.item.id, this.state.val.task);
+                this.props.editTodo(this.props.item.id, this.state.val);
                 this.setState({ isEditing: false });
               }}
             >
@@ -67,17 +63,15 @@ class TodoElement extends Component {
           <Grid item className={classes.text}>
             <Checkbox
               inputProps={{ "aria-label": "uncontrolled-checkbox" }}
-              onChange={this.checkhandleChange}
-              onClick={() => {
-                this.props.checkFun(this.state.val.id);
-              }}
+              onChange={() => this.props.checkFun(this.props.item.id)}
+              checked={this.props.item.isCompleted}
             />
-            {this.state.checked === true ? (
+            {this.props.item.isCompleted === true ? (
               <div style={{ textDecoration: "line-through" }}>
-                {this.state.val.task}
+                {this.state.val}
               </div>
             ) : (
-              <div>{this.state.val.task}</div>
+              <div>{this.state.val}</div>
             )}
           </Grid>
         )}
@@ -85,10 +79,18 @@ class TodoElement extends Component {
           <IconButton
             aria-label="edit"
             onClick={() => {
-              this.setState({ isEditing: true });
+              if (this.props.item.isCompleted === false) {
+                this.setState({ isEditing: true });
+              } else {
+                this.setState({ isEditing: false });
+              }
             }}
           >
-            <EditIcon fontSize="small" color="primary" />
+            {this.props.item.isCompleted === false ? (
+              <EditIcon fontSize="small" color="primary" />
+            ) : (
+              <EditIcon fontSize="small" color="disabled" />
+            )}
           </IconButton>
           <IconButton
             aria-label="delete"

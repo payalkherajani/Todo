@@ -34,6 +34,7 @@ TabPanel.propTypes = {
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
+
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -62,57 +63,69 @@ class Todo extends Component {
     super(props);
     this.state = {
       todo: [],
-      activeTodo: [],
-      deleteTodo: [],
       value: 0,
-      currentTask: {
-        task: "",
-        id: "",
-      },
+      task: "",
     };
   }
 
+  TodoFunction = () => {
+    let todoitems;
+    if (this.state.value === 0) {
+      //All Tab
+      todoitems = this.state.todo.filter((t, index) => {
+        return t;
+      });
+    } else if (this.state.value === 1) {
+      //Active Tab
+      todoitems = this.state.todo.filter((t, index) => {
+        return t.isCompleted !== true;
+      });
+    } else if (this.state.value === 2) {
+      //Completed tab
+      todoitems = this.state.todo.filter((t, index) => {
+        return t.isCompleted === true;
+      });
+    }
+
+    return todoitems;
+  };
+
   checkFun = (id) => {
-    [...this.state.todo].forEach((d) => {
-      if (d.id === id) {
-        this.state.deleteTodo.push(d);
+    const filteredtodo = [...this.state.todo].map((at) => {
+      if (at.id === id) {
+        at.isCompleted = true;
+        return at;
+      } else {
+        return at;
       }
     });
 
-    [...this.state.todo].forEach((ad) => {
-      if (ad.id !== id) {
-        this.state.activeTodo.push(ad);
-      }
-    });
-    this.setState({ activeTodo: this.state.activeTodo });
-    this.setState({ deleteTodo: this.state.deleteTodo });
+    const activeTodo = filteredtodo.filter((ft) => ft.isCompleted === false);
+    this.setState({ todo: filteredtodo });
   };
 
   tabhandleChange = (event, newValue) => {
+    console.log(event, newValue);
     this.setState({ value: newValue });
   };
 
   handleChange = (e) => {
     this.setState({
-      currentTask: {
-        task: e.target.value,
-        id: Date.now(),
-      },
+      task: e.target.value,
     });
   };
 
   addItem = () => {
-    const newTask = this.state.currentTask;
-    if (newTask.task !== "") {
-      const newtodo = [...this.state.todo, newTask];
-      this.setState({
-        todo: newtodo,
-        currentTask: {
-          task: "",
-          id: "",
-        },
-      });
-    }
+    const newTask = {
+      id: Date.now(),
+      task: this.state.task,
+      isCompleted: false,
+    };
+    const newtodo = [...this.state.todo, newTask];
+    this.setState({
+      todo: newtodo,
+      task: "",
+    });
   };
 
   deleteTask = (cid) => {
@@ -135,6 +148,8 @@ class Todo extends Component {
 
   render() {
     const { classes } = this.props;
+    const todoitems = this.TodoFunction();
+    console.log(todoitems);
 
     return (
       <Grid
@@ -155,7 +170,7 @@ class Todo extends Component {
                 <TextField
                   label="What needs to be done"
                   variant="outlined"
-                  value={this.state.currentTask.task}
+                  value={this.state.task}
                   onChange={this.handleChange}
                   InputProps={{
                     endAdornment: <ArrowForwardIosIcon fontSize="small" />,
@@ -184,8 +199,8 @@ class Todo extends Component {
                 </Tabs>
               </AppBar>
               <TabPanel value={this.state.value} index={0}>
-                {this.state.todo.length !== 0
-                  ? this.state.todo.map((item, index) => {
+                {todoitems.length !== 0
+                  ? todoitems.map((item, index) => {
                       return (
                         <div key={item.id}>
                           <TodoElement
@@ -202,8 +217,8 @@ class Todo extends Component {
             </Grid>
             <Box>
               <TabPanel value={this.state.value} index={1}>
-                {this.state.activeTodo.length !== 0
-                  ? this.state.activeTodo.map((item, index) => {
+                {todoitems.length !== 0
+                  ? todoitems.map((item, index) => {
                       return (
                         <div
                           key={index}
@@ -221,9 +236,9 @@ class Todo extends Component {
                   : null}
               </TabPanel>
               <TabPanel value={this.state.value} index={2}>
-                {this.state.deleteTodo.length !== 0 ? (
+                {todoitems.length !== 0 ? (
                   <div>
-                    {this.state.deleteTodo.map((item, index) => {
+                    {todoitems.map((item, index) => {
                       if (item !== undefined) {
                         return (
                           <div
