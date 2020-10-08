@@ -18,6 +18,7 @@ const styles = () => ({
     color: "#f50057",
     fontSize: "20px",
     textTransform: "uppercase",
+    display: "flex",
   },
 });
 
@@ -26,9 +27,14 @@ class TodoElement extends Component {
     super(props);
     this.state = {
       isEditing: false,
-      val: this.props.item.task,
+      val: this.props.item,
+      checked: false,
     };
   }
+
+  checkhandleChange = (event) => {
+    this.setState({ checked: event.target.checked });
+  };
 
   render() {
     const { classes } = this.props;
@@ -43,14 +49,14 @@ class TodoElement extends Component {
           <Grid item style={{ display: "flex", gap: "10px" }}>
             <input
               type="text"
-              value={this.state.val}
+              value={this.state.val.task}
               onChange={(e) => this.setState({ val: e.target.value })}
               className={classes.text}
             />
             <button
               type="submit"
               onClick={() => {
-                this.props.editTodo(this.props.item.id, this.state.val);
+                this.props.editTodo(this.props.item.id, this.state.val.task);
                 this.setState({ isEditing: false });
               }}
             >
@@ -59,8 +65,20 @@ class TodoElement extends Component {
           </Grid>
         ) : (
           <Grid item className={classes.text}>
-            <Checkbox inputProps={{ "aria-label": "uncontrolled-checkbox" }} />{" "}
-            {this.state.val}
+            <Checkbox
+              inputProps={{ "aria-label": "uncontrolled-checkbox" }}
+              onChange={this.checkhandleChange}
+              onClick={() => {
+                this.props.checkFun(this.state.val.id);
+              }}
+            />
+            {this.state.checked === true ? (
+              <div style={{ textDecoration: "line-through" }}>
+                {this.state.val.task}
+              </div>
+            ) : (
+              <div>{this.state.val.task}</div>
+            )}
           </Grid>
         )}
         <Grid item>

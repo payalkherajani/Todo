@@ -62,6 +62,7 @@ class Todo extends Component {
     super(props);
     this.state = {
       todo: [],
+      activeTodo: [],
       deleteTodo: [],
       value: 0,
       currentTask: {
@@ -70,6 +71,22 @@ class Todo extends Component {
       },
     };
   }
+
+  checkFun = (id) => {
+    [...this.state.todo].forEach((d) => {
+      if (d.id === id) {
+        this.state.deleteTodo.push(d);
+      }
+    });
+
+    [...this.state.todo].forEach((ad) => {
+      if (ad.id !== id) {
+        this.state.activeTodo.push(ad);
+      }
+    });
+    this.setState({ activeTodo: this.state.activeTodo });
+    this.setState({ deleteTodo: this.state.deleteTodo });
+  };
 
   tabhandleChange = (event, newValue) => {
     this.setState({ value: newValue });
@@ -100,15 +117,7 @@ class Todo extends Component {
 
   deleteTask = (cid) => {
     const delTodo = [...this.state.todo].filter((dtod) => dtod.id !== cid);
-
-    [...this.state.todo].forEach((d) => {
-      if (d.id === cid) {
-        this.state.deleteTodo.push(d);
-      }
-    });
-
     this.setState({ todo: delTodo });
-    this.setState({ deleteTodo: this.state.deleteTodo });
   };
 
   editTodo = (cid, val) => {
@@ -183,6 +192,7 @@ class Todo extends Component {
                             item={item}
                             deleteTask={this.deleteTask}
                             editTodo={this.editTodo}
+                            checkFun={this.checkFun}
                           />
                         </div>
                       );
@@ -192,8 +202,8 @@ class Todo extends Component {
             </Grid>
             <Box>
               <TabPanel value={this.state.value} index={1}>
-                {this.state.todo.length !== 0
-                  ? this.state.todo.map((item, index) => {
+                {this.state.activeTodo.length !== 0
+                  ? this.state.activeTodo.map((item, index) => {
                       return (
                         <div
                           key={index}
