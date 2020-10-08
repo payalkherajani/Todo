@@ -48,6 +48,13 @@ const styles = () => ({
   field: {
     width: "150%",
   },
+  heading: {
+    marginTop: "2rem",
+  },
+  title: {
+    color: "rgba(175, 47, 47, 0.15)",
+    fontSize: "100px",
+  },
 });
 
 class Todo extends Component {
@@ -121,82 +128,72 @@ class Todo extends Component {
     const { classes } = this.props;
 
     return (
-      <Box className={classes.maindiv}>
-        <Grid container spacing={5} direction="column">
-          <Grid item>
-            <Box style={{ display: "flex", gap: "20px", width: "100%" }}>
-              <TextField
-                label="What needs to be done"
-                variant="outlined"
-                value={this.state.currentTask.task}
-                onChange={this.handleChange}
-                InputProps={{
-                  endAdornment: <ArrowForwardIosIcon fontSize="small" />,
-                }}
-                className={classes.field}
-              ></TextField>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={this.addItem}
-              >
-                Add
-              </Button>
-            </Box>
-          </Grid>
-          <Grid item>
-            <AppBar position="static" color="default">
-              <Tabs
-                value={this.state.value}
-                onChange={this.tabhandleChange}
-                aria-label="simple tabs example"
-              >
-                <Tab label="All" {...a11yProps(0)} />
-                <Tab label="Active" {...a11yProps(1)} />
-                <Tab label="Completed" {...a11yProps(2)} />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={this.state.value} index={0}>
-              {this.state.todo.length !== 0
-                ? this.state.todo.map((item, index) => {
-                    return (
-                      <div key={item.id}>
-                        <TodoElement
-                          item={item}
-                          deleteTask={this.deleteTask}
-                          editTodo={this.editTodo}
-                        />
-                      </div>
-                    );
-                  })
-                : null}
-            </TabPanel>
-          </Grid>
-          <Box>
-            <TabPanel value={this.state.value} index={1}>
-              {this.state.todo.length !== 0
-                ? this.state.todo.map((item, index) => {
-                    return (
-                      <div
-                        key={index}
-                        style={{
-                          color: "#f50057",
-                          fontSize: "20px",
-                          textTransform: "uppercase",
-                          padding: "10px",
-                        }}
-                      >
-                        {item.task}
-                      </div>
-                    );
-                  })
-                : null}
-            </TabPanel>
-            <TabPanel value={this.state.value} index={2}>
-              {this.state.deleteTodo.length !== 0 ? (
-                <div>
-                  {this.state.deleteTodo.map((item, index) => {
-                    if (item !== undefined) {
+      <Grid
+        container
+        direction="column"
+        xs={12}
+        alignItems="center"
+        justify="center"
+        spacing={10}
+      >
+        <Grid item className={classes.heading}>
+          <Typography className={classes.title}>todos</Typography>
+        </Grid>
+        <Box className={classes.maindiv}>
+          <Grid container spacing={5} direction="column">
+            <Grid item>
+              <Box style={{ display: "flex", gap: "20px", width: "100%" }}>
+                <TextField
+                  label="What needs to be done"
+                  variant="outlined"
+                  value={this.state.currentTask.task}
+                  onChange={this.handleChange}
+                  InputProps={{
+                    endAdornment: <ArrowForwardIosIcon fontSize="small" />,
+                  }}
+                  className={classes.field}
+                ></TextField>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={this.addItem}
+                >
+                  Add
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item>
+              <AppBar position="static" color="default">
+                <Tabs
+                  value={this.state.value}
+                  onChange={this.tabhandleChange}
+                  aria-label="simple tabs example"
+                >
+                  <Tab label="All" {...a11yProps(0)} />
+                  <Tab label="Active" {...a11yProps(1)} />
+                  <Tab label="Completed" {...a11yProps(2)} />
+                </Tabs>
+              </AppBar>
+              <TabPanel value={this.state.value} index={0}>
+                {this.state.todo.length !== 0
+                  ? this.state.todo.map((item, index) => {
+                      return (
+                        <div key={item.id}>
+                          <TodoElement
+                            item={item}
+                            deleteTask={this.deleteTask}
+                            editTodo={this.editTodo}
+                          />
+                        </div>
+                      );
+                    })
+                  : null}
+              </TabPanel>
+            </Grid>
+            <Box>
+              <TabPanel value={this.state.value} index={1}>
+                {this.state.todo.length !== 0
+                  ? this.state.todo.map((item, index) => {
                       return (
                         <div
                           key={index}
@@ -210,16 +207,38 @@ class Todo extends Component {
                           {item.task}
                         </div>
                       );
-                    }
-                  })}
-                </div>
-              ) : (
-                <p> No Task Deleted </p>
-              )}
-            </TabPanel>
-          </Box>
-        </Grid>
-      </Box>
+                    })
+                  : null}
+              </TabPanel>
+              <TabPanel value={this.state.value} index={2}>
+                {this.state.deleteTodo.length !== 0 ? (
+                  <div>
+                    {this.state.deleteTodo.map((item, index) => {
+                      if (item !== undefined) {
+                        return (
+                          <div
+                            key={index}
+                            style={{
+                              color: "#f50057",
+                              fontSize: "20px",
+                              textTransform: "uppercase",
+                              padding: "10px",
+                            }}
+                          >
+                            {item.task}
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
+                ) : (
+                  <p> No Task Deleted </p>
+                )}
+              </TabPanel>
+            </Box>
+          </Grid>
+        </Box>
+      </Grid>
     );
   }
 }
