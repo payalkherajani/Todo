@@ -100,7 +100,7 @@ class Todo extends Component {
       }
     });
 
-    const activeTodo = filteredtodo.filter((ft) => ft.isCompleted === false);
+    // const activeTodo = filteredtodo.filter((ft) => ft.isCompleted === false);
     this.setState({ todo: filteredtodo });
   };
 
