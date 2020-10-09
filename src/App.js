@@ -1,22 +1,9 @@
 import React from "react";
-//For Routing
-import { Route, BrowserRouter as Router } from "react-router-dom";
 
-//For Components
-import Todo from "./components/Todo.js";
-import Login from "./components/Login";
-import Register from "./components/SignUp";
+import AppRoutes from "./routes";
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Route path="/" exact component={Todo} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-      </Router>
-    </div>
-  );
+  return <AppRoutes />;
 }
 
 export default App;

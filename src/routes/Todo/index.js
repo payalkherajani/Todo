@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import TodoElement from "./TodoElement.js";
+import TodoElement from "../../components/TodoElement.js";
 
 //Material Ui
 import { withStyles } from "@material-ui/styles";
