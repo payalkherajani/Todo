@@ -73,7 +73,7 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </Grid>
-          <Grid container item xs={6}>
+          <Grid container item xs={6} lg={6}>
             <Link className={classes.a}>
               <Button
                 variant="contained"
