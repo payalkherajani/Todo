@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 // Material - ui
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
@@ -11,6 +12,9 @@ const styles = () => ({
   title: {
     color: "rgba(175, 47, 47, 0.15)",
     fontSize: "100px",
+  },
+  a: {
+    textDecoration: "none",
   },
 });
 
@@ -31,12 +35,12 @@ class Login extends Component {
 
   render() {
     const { classes } = this.props;
+
     return (
       <form>
         <Grid
           container
           direction="column"
-          md={12}
           alignItems="center"
           justify="center"
           spacing={5}
@@ -48,6 +52,7 @@ class Login extends Component {
           <Grid container item xs={6} justify="center" alignItems="center">
             <TextField
               fullWidth={true}
+              type="number"
               id="outlined-basic"
               label="Phone Number"
               variant="outlined"
@@ -69,22 +74,33 @@ class Login extends Component {
             />
           </Grid>
           <Grid container item xs={6}>
-            <Button
-              variant="contained"
-              color="secondary"
-              fullWidth={true}
-              onClick={() => {
-                if (this.state.phoneNum && this.state.pass !== "") {
-                  let token = `todo${this.state.phoneNum}todo${this.state.pass}`;
-                  // console.log("token", token);
-                  localStorage.setItem("token", token);
-                } else {
-                  alert("Please enter Phone Number and Password both");
-                }
-              }}
-            >
-              Login
-            </Button>
+            <Link className={classes.a}>
+              <Button
+                variant="contained"
+                color="secondary"
+                fullWidth={true}
+                onClick={() => {
+                  if (
+                    this.state.phoneNum.length === 10 &&
+                    this.state.pass.length >= 6
+                  ) {
+                    let token = `todo${this.state.phoneNum}todo${this.state.pass}`;
+                    // console.log("token", token);
+                    localStorage.setItem("token", token);
+                    this.setState({ phoneNum: "" });
+                    this.setState({ pass: "" });
+                  } else {
+                    alert(
+                      "Please enter 10-digit mobile number and password of minimum length 6"
+                    );
+                    this.setState({ phoneNum: "" });
+                    this.setState({ pass: "" });
+                  }
+                }}
+              >
+                Login
+              </Button>
+            </Link>
           </Grid>
         </Grid>
       </form>
