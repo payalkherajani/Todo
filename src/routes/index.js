@@ -14,11 +14,12 @@ import Register from "./SignUp";
 
 const PrivateRoute = ({ component: Component, ...props }) => {
   const token = localStorage.getItem("token");
+  // console.log(token);
   return (
     <Route
       {...props}
       render={() => {
-        if (token !== null || token !== "") {
+        if (token !== null) {
           return <Component {...props} />;
         } else {
           return <Redirect to="/login" />;
