@@ -1,27 +1,6 @@
 import React, { Component } from "react";
 
 
-//Material Ui
-import { withStyles } from "@material-ui/styles";
-import { Grid, Checkbox } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import { IconButton } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
-
-const styles = () => ({
-  maindiv: {
-    gap: "10px",
-    padding: "10px",
-  },
-  text: {
-    color: "#f50057",
-    fontSize: "20px",
-    textTransform: "uppercase",
-    display: "flex",
-  },
-});
-
 class TodoElement extends Component {
   constructor(props) {
     super(props);
@@ -32,22 +11,14 @@ class TodoElement extends Component {
   }
 
   render() {
-    // console.log(this.props.item);
-    const { classes } = this.props;
     return (
-      <Grid
-        container
-        className={classes.maindiv}
-        alignItems="center"
-        justify="space-between"
-      >
+      <div>
         {this.state.isEditing === true ? (
-          <Grid item style={{ display: "flex", gap: "10px" }}>
+          <div>
             <input
               type="text"
               value={this.state.val}
               onChange={(e) => this.setState({ val: e.target.value })}
-              className={classes.text}
             />
             <button
               type="submit"
@@ -58,11 +29,11 @@ class TodoElement extends Component {
             >
               Edit
             </button>
-          </Grid>
+          </div>
         ) : (
-          <Grid item className={classes.text}>
-            <Checkbox
-              inputProps={{ "aria-label": "uncontrolled-checkbox" }}
+          <div>
+            <input
+              type="checkbox"
               onChange={() => this.props.checkFun(this.props.item.id)}
               checked={this.props.item.isCompleted}
             />
@@ -73,10 +44,10 @@ class TodoElement extends Component {
             ) : (
               <div>{this.state.val}</div>
             )}
-          </Grid>
+          </div>
         )}
-        <Grid item>
-          <IconButton
+        <div>
+          <button
             aria-label="edit"
             onClick={() => {
               if (this.props.item.isCompleted === false) {
@@ -87,25 +58,23 @@ class TodoElement extends Component {
             }}
           >
             {this.props.item.isCompleted === false ? (
-              <EditIcon fontSize="small" color="primary" />
+              <i className="far fa-edit"></i>
             ) : (
-              <EditIcon fontSize="small" color="disabled" />
+              <i className="far fa-edit"></i>
             )}
-          </IconButton>
-          <IconButton
+          </button>
+          <button
             aria-label="delete"
             onClick={() => this.props.deleteTask(this.props.item.id)}
           >
-            <DeleteIcon fontSize="small" style={{ color: green[500] }} />
-          </IconButton>
-        </Grid>
-      </Grid>
+            <i className="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>
     );
   }
 }
 
-TodoElement.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(TodoElement);
+
+export default TodoElement

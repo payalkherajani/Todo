@@ -1,69 +1,7 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import TodoElement from "../../components/TodoElement.js";
-
-//Material Ui
-import { withStyles } from "@material-ui/styles";
-import { Grid, Box, Button, TextField, Typography } from "@material-ui/core";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Redirect } from "react-router-dom";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-const styles = () => ({
-  maindiv: {
-    padding: "5px",
-  },
-  field: {
-    width: "150%",
-  },
-  heading: {
-    marginTop: "2rem",
-  },
-  title: {
-    color: "rgba(175, 47, 47, 0.15)",
-    fontSize: "100px",
-  },
-  exitI: {
-    position: "absolute",
-    top: "10px",
-    right: "20px",
-  },
-});
 
 class Todo extends Component {
   constructor(props) {
@@ -79,17 +17,14 @@ class Todo extends Component {
   TodoFunction = () => {
     let todoitems;
     if (this.state.value === 0) {
-      //All Tab
       todoitems = this.state.todo.filter((t, index) => {
         return t;
       });
     } else if (this.state.value === 1) {
-      //Active Tab
       todoitems = this.state.todo.filter((t, index) => {
         return t.isCompleted !== true;
       });
     } else if (this.state.value === 2) {
-      //Completed tab
       todoitems = this.state.todo.filter((t, index) => {
         return t.isCompleted === true;
       });
@@ -107,15 +42,10 @@ class Todo extends Component {
         return at;
       }
     });
-
-    // const activeTodo = filteredtodo.filter((ft) => ft.isCompleted === false);
     this.setState({ todo: filteredtodo });
   };
 
-  tabhandleChange = (event, newValue) => {
-    console.log(event, newValue);
-    this.setState({ value: newValue });
-  };
+  
 
   handleChange = (e) => {
     this.setState({
@@ -160,7 +90,6 @@ class Todo extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const todoitems = this.TodoFunction();
 
     const { navigate } = this.state;
@@ -169,62 +98,41 @@ class Todo extends Component {
     }
 
     return (
-      <Box>
-        <Box m={1} className={classes.exitI}>
+      <div>
+        <div>
           {" "}
-          <Button onClick={this.logout}>
-            <ExitToAppIcon fontSize="large" />
+          <button onClick={this.logout}>
+          <i className="fas fa-sign-out-alt"></i>
             Logout
-          </Button>
-        </Box>
-        <Grid
-          container
-          direction="column"
-          alignItems="center"
-          justify="center"
-          spacing={10}
-        >
-          <Grid item className={classes.heading}>
-            <Typography className={classes.title}>todos</Typography>
-          </Grid>
-          <Box className={classes.maindiv}>
-            <Grid container spacing={5} direction="column">
-              <Grid item>
-                <Box style={{ display: "flex", gap: "20px", width: "100%" }}>
-                  <TextField
-                    label="What needs to be done"
-                    variant="outlined"
+          </button>
+        </div>
+        <div>
+          <div>
+            <h1>todos</h1>
+          </div>
+          <div>
+            <div>
+              <div>
+                <div style={{ display: "flex", gap: "20px", width: "100%" }}>
+                  <input
                     value={this.state.task}
                     onChange={this.handleChange}
-                    InputProps={{
-                      endAdornment: <ArrowForwardIosIcon fontSize="small" />,
-                    }}
-                    className={classes.field}
-                  ></TextField>
-                  <Button
+                  ></input>
+                  <button
                     variant="contained"
                     color="secondary"
                     onClick={this.addItem}
                   >
                     Add
-                  </Button>
-                </Box>
-              </Grid>
-              <Grid item>
-                <AppBar position="static" color="default">
-                  <Tabs
-                    value={this.state.value}
-                    onChange={this.tabhandleChange}
-                    aria-label="simple tabs example"
-                  >
-                    <Tab label="All" {...a11yProps(0)} />
-                    <Tab label="Active" {...a11yProps(1)} />
-                    <Tab label="Completed" {...a11yProps(2)} />
-                  </Tabs>
-                </AppBar>
-                <TabPanel value={this.state.value} index={0}>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <button>All</button>
+                  <div>
                   {todoitems.length !== 0
-                    ? todoitems.map((item, index) => {
+                    ? todoitems.map((item) => {
                         return (
                           <div key={item.id}>
                             <TodoElement
@@ -237,12 +145,29 @@ class Todo extends Component {
                         );
                       })
                     : null}
-                </TabPanel>
-              </Grid>
-              <Box>
-                <TabPanel value={this.state.value} index={1}>
-                  {todoitems.length !== 0
+                  </div>
+                </div>
+                <div>
+                  <button onClick={() => this.setState({value: 1})}>Active</button>
+                  <div>
+                  {todoitems.length !== 0 && this.state.value === 1
                     ? todoitems.map((item, index) => {
+                        return (
+                          <div key={index}>
+                            {item.task}
+                          </div>
+                        );
+                      })
+                    : null}
+                  </div>
+                </div>
+                <div>
+                  <button onClick={() => this.setState({value: 2})}>Completed</button>
+                  <div>
+                  {
+                  todoitems.length !== 0 && this.state.value === 2 ? 
+                      todoitems.map((item, index) => {
+                      if (item !== undefined) {
                         return (
                           <div
                             key={index}
@@ -256,44 +181,19 @@ class Todo extends Component {
                             {item.task}
                           </div>
                         );
-                      })
-                    : null}
-                </TabPanel>
-                <TabPanel value={this.state.value} index={2}>
-                  {todoitems.length !== 0 ? (
-                    <div>
-                      {todoitems.map((item, index) => {
-                        if (item !== undefined) {
-                          return (
-                            <div
-                              key={index}
-                              style={{
-                                color: "#f50057",
-                                fontSize: "20px",
-                                textTransform: "uppercase",
-                                padding: "10px",
-                              }}
-                            >
-                              {item.task}
-                            </div>
-                          );
-                        }
-                      })}
-                    </div>
-                  ) : (
-                    <p> No Task Deleted </p>
-                  )}
-                </TabPanel>
-              </Box>
-            </Grid>
-          </Box>
-        </Grid>
-      </Box>
+                      }
+                    })
+                 : null }
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
 
-Todo.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-export default withStyles(styles)(Todo);
+export default Todo

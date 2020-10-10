@@ -14,7 +14,6 @@ import Register from "./SignUp";
 
 const PrivateRoute = ({ component: Component, ...props }) => {
   const token = localStorage.getItem("token");
-  // console.log(token);
   return (
     <Route
       {...props}
