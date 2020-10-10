@@ -20,14 +20,16 @@ class Login extends Component {
   render() {
 
     return (
-      <form>
-        <div>
-          <div>
-            <h1>login</h1>
+      <div className="Login-main-div">
+      <form className="form-div">
+        <div className="container-login">
+          <div className="heading-container">
+            <h1 className="heading-login">login</h1>
           </div>
 
-          <div>
+          <div className="form-input">
             <input
+            className="input-login"
               placeholder="Phone Number"
               type="number"
               name="phoneNum"
@@ -35,8 +37,9 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div>
+          <div className="form-input">
             <input
+            className="input-login"
             placeholder="Password"
              type="password"
               name="pass"
@@ -44,9 +47,10 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div>
+          <div className="form-button-div">
             <Link >
               <button
+              className="login-button"
                 onClick={() => {
                   if (
                     this.state.phoneNum.length === 10 &&
@@ -71,6 +75,7 @@ class Login extends Component {
           </div>
         </div>
       </form>
+      </div>
     );
   }
 }

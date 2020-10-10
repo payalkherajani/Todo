@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en");
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  min-height: 100vh;
+  text-align: center;
+}
+body,
+button {
+  font-family: "Roboto", sans-serif !important;
+}
+
+/* Login-Form */
+.Login-main-div {
+  width: 80%;
+  margin: 2rem auto 1rem auto;
+  padding: 3rem;
+  height: 500px;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+.form-div {
+  height: 500px;
+  padding: 2rem;
+}
+.container-login {
+  height: 500px;
+}
+.heading-container {
+  padding: 20px;
+}
+.heading-login {
+  color: rgba(175, 47, 47, 0.15);
+  font-size: 80px;
+  font-weight: 900;
+}
+.form-input {
+  padding: 1rem;
+}
+.input-login {
+  padding: 20px;
+  width: 50%;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #909090;
+  background-color: #f8f8f8;
+  font-size: 20px;
+}
+
+.form-button-div {
+  padding: 1rem;
+}
+.login-button {
+  padding: 20px;
+  width: 25%;
+  background-color: rgb(220, 0, 78);
+  color: #fff;
+  outline: none;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.login-button:hover {
+  background-color: rgb(172, 14, 80);
+}

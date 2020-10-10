@@ -129,7 +129,7 @@ class Todo extends Component {
               </div>
               <div>
                 <div>
-                  <button>All</button>
+                  <button onClick={() => this.setState({value: 0})}>All</button>
                   <div>
                   {todoitems.length !== 0
                     ? todoitems.map((item) => {
