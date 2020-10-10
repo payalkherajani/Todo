@@ -15,25 +15,28 @@ button {
   font-family: "Roboto", sans-serif !important;
 }
 
-/* Login-Form */
-.Login-main-div {
+/* Login-Form and Register-Form */
+.Login-main-div,
+.Register-main-div {
   width: 80%;
   margin: 2rem auto 1rem auto;
   padding: 3rem;
-  height: 500px;
+  height: 550px;
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 .form-div {
   height: 500px;
   padding: 2rem;
 }
-.container-login {
+.container-login,
+.container-register {
   height: 500px;
 }
 .heading-container {
   padding: 20px;
 }
-.heading-login {
+.heading-login,
+.heading-register {
   color: rgba(175, 47, 47, 0.15);
   font-size: 80px;
   font-weight: 900;
@@ -41,7 +44,8 @@ button {
 .form-input {
   padding: 1rem;
 }
-.input-login {
+.input-login,
+.input-register {
   padding: 20px;
   width: 50%;
   outline: none;
@@ -54,7 +58,8 @@ button {
 .form-button-div {
   padding: 1rem;
 }
-.login-button {
+.login-button,
+.register-button {
   padding: 20px;
   width: 25%;
   background-color: rgb(220, 0, 78);
@@ -67,3 +72,7 @@ button {
 .login-button:hover {
   background-color: rgb(172, 14, 80);
 }
+
+/* Todo-Styling */
+
+/* Todo-Element-Styling */
