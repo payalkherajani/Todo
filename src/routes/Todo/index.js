@@ -118,6 +118,7 @@ class Todo extends Component {
                    className="input-login"
                     value={this.state.task}
                     onChange={this.handleChange}
+                    placeholder="What needs to be done ?"
                   ></input>
                   <button
                    className="todo-add-button"

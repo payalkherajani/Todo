@@ -14,6 +14,10 @@ body,
 button {
   font-family: "Roboto", sans-serif !important;
 }
+::-webkit-input-placeholder {
+  font-style: italic;
+  color: #dcdcdc;
+}
 
 /* Login-Form and Register-Form */
 .Login-main-div,
@@ -62,11 +66,18 @@ button {
 .register-button {
   padding: 20px;
   width: 25%;
-  background-color: rgb(220, 0, 78);
+  background-image: linear-gradient(
+    -225deg,
+    #231557 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
   color: #fff;
   outline: none;
   border-radius: 5px;
   font-size: 20px;
+  border: none;
 }
 
 .login-button:hover {
@@ -86,7 +97,13 @@ button {
 }
 .todo-logout-button {
   padding: 15px;
-  background-color: rgb(220, 0, 78);
+  background-image: linear-gradient(
+    to right,
+    #f78ca0 0%,
+    #f9748f 19%,
+    #fd868c 60%,
+    #fe9a8b 100%
+  );
   color: #fff;
   outline: none;
   border-radius: 5px;
@@ -124,7 +141,7 @@ button {
   gap: 20px;
 }
 .todo-add-button {
-  background-color: rgb(220, 0, 78);
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
   outline: none;
   border-radius: 5px;
   padding: 2px 2rem 0.2rem 2rem;
@@ -160,7 +177,6 @@ button {
       )
       #989898;
   background-blend-mode: multiply, multiply;
-
   padding: 15px 25px 15px 25px;
   color: #fff;
   outline: none;
@@ -183,3 +199,27 @@ button {
 }
 
 /* Todo-Element-Styling */
+.todoelement-container {
+  display: flex;
+  justify-content: space-around;
+  min-height: 5vh;
+  align-items: center;
+}
+
+.todoelement-checkbox-text {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  text-transform: uppercase;
+  color: #f50057;
+  font-size: 20px;
+  padding: 10px;
+}
+.todoelement-checkbox {
+  width: 20px;
+  height: 20px;
+}
+.edit-del-buttons {
+  display: flex;
+  gap: 10px;
+}
