@@ -17,15 +17,15 @@ class Todo extends Component {
   TodoFunction = () => {
     let todoitems;
     if (this.state.value === 0) {
-      todoitems = this.state.todo.filter((t, index) => {
+      todoitems = this.state.todo.filter((t) => {
         return t;
       });
     } else if (this.state.value === 1) {
-      todoitems = this.state.todo.filter((t, index) => {
+      todoitems = this.state.todo.filter((t) => {
         return t.isCompleted !== true;
       });
     } else if (this.state.value === 2) {
-      todoitems = this.state.todo.filter((t, index) => {
+      todoitems = this.state.todo.filter((t) => {
         return t.isCompleted === true;
       });
     }
@@ -63,6 +63,7 @@ class Todo extends Component {
     this.setState({
       todo: newtodo,
       task: "",
+      value: 0
     });
   };
 
@@ -98,27 +99,28 @@ class Todo extends Component {
     }
 
     return (
-      <div>
-        <div>
+      <div className="todo-main-div">
+        <div className="todo-logout-div">
           {" "}
-          <button onClick={this.logout}>
+          <button onClick={this.logout} className="todo-logout-button"> {" "}
           <i className="fas fa-sign-out-alt"></i>
             Logout
           </button>
         </div>
-        <div>
-          <div>
-            <h1>todos</h1>
+        <div className="todo-container">
+          <div className="todo-heading-div">
+            <h1 className="todo-heading">todos</h1>
           </div>
-          <div>
-            <div>
-              <div>
-                <div style={{ display: "flex", gap: "20px", width: "100%" }}>
+          <div className="todo-container-2">
+            <div className="todo-wrapper-1">
+                <div className="input-button-div">
                   <input
+                   className="input-login"
                     value={this.state.task}
                     onChange={this.handleChange}
                   ></input>
                   <button
+                   className="todo-add-button"
                     variant="contained"
                     color="secondary"
                     onClick={this.addItem}
@@ -126,12 +128,11 @@ class Todo extends Component {
                     Add
                   </button>
                 </div>
-              </div>
-              <div>
-                <div>
-                  <button onClick={() => this.setState({value: 0})}>All</button>
-                  <div>
-                  {todoitems.length !== 0
+              <div className="todo-wrapper-2">
+                <div className="all-tag">
+                  <button className="all-button"  onClick={() => this.setState({value: 0})}>All</button>
+                  <div className="all-todoitems">
+                  {todoitems.length !== 0 && this.state.value === 0
                     ? todoitems.map((item) => {
                         return (
                           <div key={item.id}>
@@ -147,13 +148,13 @@ class Todo extends Component {
                     : null}
                   </div>
                 </div>
-                <div>
-                  <button onClick={() => this.setState({value: 1})}>Active</button>
-                  <div>
+                <div className="active-tag">
+                  <button className="active-button" onClick={() => this.setState({value: 1})}>Active</button>
+                  <div className="active-todoitems">
                   {todoitems.length !== 0 && this.state.value === 1
                     ? todoitems.map((item, index) => {
                         return (
-                          <div key={index}>
+                          <div key={index} className="internal-todoitems">
                             {item.task}
                           </div>
                         );
@@ -161,22 +162,18 @@ class Todo extends Component {
                     : null}
                   </div>
                 </div>
-                <div>
-                  <button onClick={() => this.setState({value: 2})}>Completed</button>
-                  <div>
+                <div className="completed-tag">
+                  <button className="completed-button"  onClick={() => this.setState({value: 2})}>Completed</button>
+                  <div className="completed-todoitems">
                   {
                   todoitems.length !== 0 && this.state.value === 2 ? 
                       todoitems.map((item, index) => {
                       if (item !== undefined) {
                         return (
                           <div
+                           className="internal-todoitems"
+                           style={{textDecoration: "line-through"}}
                             key={index}
-                            style={{
-                              color: "#f50057",
-                              fontSize: "20px",
-                              textTransform: "uppercase",
-                              padding: "10px",
-                            }}
                           >
                             {item.task}
                           </div>

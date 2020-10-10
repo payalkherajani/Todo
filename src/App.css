@@ -74,5 +74,112 @@ button {
 }
 
 /* Todo-Styling */
+.todo-main-div {
+  width: 90%;
+  margin: 2rem auto 1rem auto;
+  padding: 1rem;
+  min-height: 100vh;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+.todo-logout-div {
+  float: right;
+}
+.todo-logout-button {
+  padding: 15px;
+  background-color: rgb(220, 0, 78);
+  color: #fff;
+  outline: none;
+  border-radius: 5px;
+  font-size: 20px;
+  border: none;
+}
+.todo-container {
+  width: 80%;
+  margin: auto;
+  height: 500px;
+}
+.todo-heading-div {
+  padding: 5px;
+}
+.todo-heading {
+  margin: auto;
+  width: 80%;
+  color: rgba(175, 47, 47, 0.15);
+  font-size: 80px;
+  font-weight: 900;
+  padding: 5px;
+}
+.todo-container-2 {
+  min-height: 50vh;
+  padding: 20px;
+}
+.todo-wrapper-1 {
+  min-height: 50vh;
+  padding: 10px;
+}
+.input-button-div {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.todo-add-button {
+  background-color: rgb(220, 0, 78);
+  outline: none;
+  border-radius: 5px;
+  padding: 2px 2rem 0.2rem 2rem;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+}
+.todo-wrapper-2 {
+  margin-top: 2rem;
+  min-height: 50vh;
+  padding: 30px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.all-tag,
+.active-tag,
+.completed-tag {
+  width: 33.3%;
+}
+.active-button,
+.all-button,
+.completed-button {
+  background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(0, 0, 0, 0.15) 100%
+    ),
+    radial-gradient(
+        at top center,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(0, 0, 0, 0.4) 120%
+      )
+      #989898;
+  background-blend-mode: multiply, multiply;
+
+  padding: 15px 25px 15px 25px;
+  color: #fff;
+  outline: none;
+  border-radius: 5px;
+  font-size: 20px;
+  border: none;
+  margin-bottom: 1rem;
+}
+.active-todoitems,
+.completed-todoitems {
+  min-height: 5vh;
+  color: #f50057;
+  font-size: 20px;
+  text-transform: uppercase;
+  padding: 10px;
+}
+
+.internal-todoitems {
+  padding: 10px;
+}
 
 /* Todo-Element-Styling */
