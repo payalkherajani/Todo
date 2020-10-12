@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import style from "./style.module.css"
 
-console.log(style)
+
 class TodoElement extends Component {
   constructor(props) {
     super(props);
