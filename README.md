@@ -33,4 +33,11 @@ _This Todo App is Completely written in React using Class based components_
 4. mark as done
 
 **Here is Demo**
+
 ![Login](/src/images/login.png)
+
+![All](/src/images/img1.png)
+
+![Active](/src/images/img2.png)
+
+![Completed](/src/images/img3.png)
