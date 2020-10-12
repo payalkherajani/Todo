@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import style from "./style.module.css"
 
-
+console.log(style)
 class TodoElement extends Component {
   constructor(props) {
     super(props);
@@ -12,18 +13,18 @@ class TodoElement extends Component {
 
   render() {
     return (
-      <div className="todoelement-container">
+      <div className={style.todoelementcontainer}>
         {this.state.isEditing === true ? (
-          <div className="todoelement-div-1">
+          <div className={style.todoelementdiv1}>
             <input
               type="text"
-              className="todoelement-input"
+              className={style.todoelementinput}
               value={this.state.val}
               onChange={(e) => this.setState({ val: e.target.value })}
             />
             <button
               type="submit"
-              className="todoelement-button"
+              className={style.todoelementbutton}
               onClick={() => {
                 this.props.editTodo(this.props.item.id, this.state.val);
                 this.setState({ isEditing: false });
@@ -33,12 +34,12 @@ class TodoElement extends Component {
             </button>
           </div>
         ) : (
-          <div className="todoelement-checkbox-text">
+          <div className={style.todoelementcheckboxtext}>
             <input
               type="checkbox"
               onChange={() => this.props.checkFun(this.props.item.id)}
               checked={this.props.item.isCompleted}
-              className="todoelement-checkbox"
+              className={style.todoelementcheckbox}
             />
             {this.props.item.isCompleted === true ? (
               <div style={{ textDecoration: "line-through" }}>
@@ -49,7 +50,7 @@ class TodoElement extends Component {
             )}
           </div>
         )}
-        <div className="edit-del-buttons">
+        <div className={style.editdelbuttons}>
           <button
             aria-label="edit"
             onClick={() => {

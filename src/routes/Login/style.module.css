@@ -1,0 +1,64 @@
+/* Login-Form and Register-Form */
+.Loginmaindiv,
+.Registermaindiv {
+  width: 80%;
+  margin: 2rem auto 1rem auto;
+  padding: 3rem;
+  height: 550px;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+.formdiv {
+  height: 500px;
+  padding: 2rem;
+}
+.containerlogin,
+.containerregister {
+  height: 500px;
+}
+.headingcontainer {
+  padding: 20px;
+}
+.headinglogin,
+.headingregister {
+  color: rgba(175, 47, 47, 0.15);
+  font-size: 80px;
+  font-weight: 900;
+}
+.forminput {
+  padding: 1rem;
+}
+.inputlogin,
+.inputregister {
+  padding: 20px;
+  width: 50%;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #909090;
+  background-color: #f8f8f8;
+  font-size: 20px;
+}
+
+.formbuttondiv {
+  padding: 1rem;
+}
+.loginbutton,
+.registerbutton {
+  padding: 20px;
+  width: 25%;
+  background-image: linear-gradient(
+    -225deg,
+    #231557 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  color: #fff;
+  outline: none;
+  border-radius: 5px;
+  font-size: 20px;
+  border: none;
+}
+
+.loginbutton:hover {
+  background-color: rgb(172, 14, 80);
+}

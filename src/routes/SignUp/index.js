@@ -1,28 +1,29 @@
 import React from "react";
+import style from "./style.module.css"
 
 const Register = () => {
 
   return (
-    <div className="Register-main-div">
-    <form className="form-div">
-      <div className="container-register">
-        <div className="heading-container">
-          <h1 className="heading-register">register</h1>
+    <div className={style.Registermaindiv}>
+    <form className={style.formdiv}>
+      <div className={style.containerregister}>
+        <div className={style.headingcontainer}>
+          <h1 className={style.headingregister}>register</h1>
         </div>
 
-        <div className="form-input">
-          <input className="input-register" type="text" placeholder="Full Name"/>
+        <div className={style.forminput}>
+          <input className={style.inputregister} type="text" placeholder="Full Name"/>
         </div>
 
-        <div className="form-input">
-          <input className="input-register"  type="email" placeholder="Email"/>
+        <div className={style.forminput}>
+          <input className={style.inputregister}  type="email" placeholder="Email"/>
         </div>
 
-        <div className="form-input" >
-          <input className="input-register" type="number" placeholder="Phone Number"/>
+        <div className={style.forminput} >
+          <input className={style.inputregister} type="number" placeholder="Phone Number"/>
         </div>
-        <div className="form-button-div">
-          <button className="register-button">
+        <div className={style.formbuttondiv}>
+          <button className={style.registerbutton}>
             Register
           </button>
         </div>

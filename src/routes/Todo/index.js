@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import TodoElement from "../../components/TodoElement.js";
+import TodoElement from "../../components/TodoElement/TodoElement.js"
 import { Redirect } from "react-router-dom";
-
+import style from "./style.module.css"
 
 class Todo extends Component {
   constructor(props) {
@@ -99,29 +99,29 @@ class Todo extends Component {
     }
 
     return (
-      <div className="todo-main-div">
-        <div className="todo-logout-div">
+      <div className={style.todomaindiv}>
+        <div className={style.todologoutdiv}>
           {" "}
-          <button onClick={this.logout} className="todo-logout-button"> {" "}
+          <button onClick={this.logout} className={style.todologoutbutton}> {" "}
           <i className="fas fa-sign-out-alt"></i>
             Logout
           </button>
         </div>
-        <div className="todo-container">
-          <div className="todo-heading-div">
-            <h1 className="todo-heading">todos</h1>
+        <div className={style.todocontainer}>
+          <div className={style.todoheadingdiv}>
+            <h1 className={style.todoheading}>todos</h1>
           </div>
-          <div className="todo-container-2">
-            <div className="todo-wrapper-1">
-                <div className="input-button-div">
+          <div className={style.todocontainer2}>
+            <div className={style.todowrapper1}>
+                <div className={style.inputbuttondiv}>
                   <input
-                   className="input-login"
+                   className={style.inputlogin}
                     value={this.state.task}
                     onChange={this.handleChange}
                     placeholder="What needs to be done ?"
                   ></input>
                   <button
-                   className="todo-add-button"
+                   className={style.todoaddbutton}
                     variant="contained"
                     color="secondary"
                     onClick={this.addItem}
@@ -129,10 +129,10 @@ class Todo extends Component {
                     Add
                   </button>
                 </div>
-              <div className="todo-wrapper-2">
-                <div className="all-tag">
-                  <button className="all-button"  onClick={() => this.setState({value: 0})}>All</button>
-                  <div className="all-todoitems">
+              <div className={style.todowrapper2}>
+                <div className={style.alltag}>
+                  <button className={style.allbutton}  onClick={() => this.setState({value: 0})}>All</button>
+                  <div className={style.alltodoitems}>
                   {todoitems.length !== 0 && this.state.value === 0
                     ? todoitems.map((item) => {
                         return (
@@ -149,9 +149,9 @@ class Todo extends Component {
                     : null}
                   </div>
                 </div>
-                <div className="active-tag">
-                  <button className="active-button" onClick={() => this.setState({value: 1})}>Active</button>
-                  <div className="active-todoitems">
+                <div className={style.activetag}>
+                  <button className={style.activebutton} onClick={() => this.setState({value: 1})}>Active</button>
+                  <div className={style.activetodoitems}>
                   {todoitems.length !== 0 && this.state.value === 1
                     ? todoitems.map((item, index) => {
                         return (
@@ -163,9 +163,9 @@ class Todo extends Component {
                     : null}
                   </div>
                 </div>
-                <div className="completed-tag">
-                  <button className="completed-button"  onClick={() => this.setState({value: 2})}>Completed</button>
-                  <div className="completed-todoitems">
+                <div className={style.completedtag}>
+                  <button className={style.completedbutton}  onClick={() => this.setState({value: 2})}>Completed</button>
+                  <div className={style.completedtodoitems}>
                   {
                   todoitems.length !== 0 && this.state.value === 2 ? 
                       todoitems.map((item, index) => {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import style from "./style.module.css"
 
 class Login extends Component {
   constructor(props) {
@@ -20,16 +20,16 @@ class Login extends Component {
   render() {
 
     return (
-      <div className="Login-main-div">
-      <form className="form-div">
-        <div className="container-login">
-          <div className="heading-container">
-            <h1 className="heading-login">login</h1>
+      <div className={style.Loginmaindiv}>
+      <form className={style.formdiv}>
+        <div className={style.containerlogin}>
+          <div className={style.headingcontainer}>
+            <h1 className={style.headinglogin}>login</h1>
           </div>
 
-          <div className="form-input">
+          <div className={style.forminput}>
             <input
-            className="input-login"
+            className={style.inputlogin}
               placeholder="Phone Number"
               type="number"
               name="phoneNum"
@@ -37,9 +37,9 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="form-input">
+          <div className={style.forminput}>
             <input
-            className="input-login"
+            className={style.inputlogin}
             placeholder="Password"
              type="password"
               name="pass"
@@ -47,10 +47,10 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="form-button-div">
+          <div className={style.formbuttondiv}>
             <Link >
               <button
-              className="login-button"
+              className={style.loginbutton}
                 onClick={() => {
                   if (
                     this.state.phoneNum.length === 10 &&

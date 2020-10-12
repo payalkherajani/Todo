@@ -1,0 +1,25 @@
+/* Todo-Element-Styling */
+.todoelementcontainer {
+  display: flex;
+  justify-content: space-around;
+  min-height: 5vh;
+  align-items: center;
+}
+
+.todoelementcheckboxtext {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  text-transform: uppercase;
+  color: #f50057;
+  font-size: 20px;
+  padding: 10px;
+}
+.todoelementcheckbox {
+  width: 20px;
+  height: 20px;
+}
+.editdelbuttons {
+  display: flex;
+  gap: 10px;
+}
