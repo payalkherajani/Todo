@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import style from "./style.module.css"
+import {Link} from 'react-router-dom'
 
 class Login extends Component {
   constructor(props) {
@@ -8,16 +8,36 @@ class Login extends Component {
     this.state = {
       phoneNum: "",
       pass: "",
+      formError: {
+        phoneNum: "",
+        pass: ""
+      }
     };
   }
 
   handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    this.setState({ [name]: value });
+    let errors = this.state.formError
+    
+    switch (name) {
+      case 'phoneNum':
+        errors.phoneNum = value.length < 10 ? ('Phone Number Should be 10-digit long') : ('')
+        break;
+      case 'pass':
+        errors.pass = value.length < 6 ? ('Password Should be of Minimum length 6') : ('')
+        break;
+      default: 
+      break;
+    }
+
+
+    this.setState({ errors, [name]: value });
   };
 
   render() {
+
+  const {formError} = this.state
 
     return (
       <div className={style.Loginmaindiv}>
@@ -35,7 +55,9 @@ class Login extends Component {
               name="phoneNum"
               value={this.state.phoneNum}
               onChange={this.handleChange}
+
             />
+            {formError.phoneNum.length > 0 && <span className={style.errorfield}>{formError.phoneNum}</span>}
           </div>
           <div className={style.forminput}>
             <input
@@ -46,32 +68,26 @@ class Login extends Component {
               value={this.state.pass}
               onChange={this.handleChange}
             />
+             {formError.pass.length > 0 && <span className={style.errorfield}>{formError.pass}</span>}
           </div>
           <div className={style.formbuttondiv}>
-            <Link >
-              <button
-              className={style.loginbutton}
-                onClick={() => {
-                  if (
-                    this.state.phoneNum.length === 10 &&
-                    this.state.pass.length >= 6
-                  ) {
-                    let token = `todo${this.state.phoneNum}todo${this.state.pass}`;
-                    localStorage.setItem("token", token);
-                    this.setState({ phoneNum: "" });
-                    this.setState({ pass: "" });
-                  } else {
-                    alert(
-                      "Please enter 10-digit mobile number and password of minimum length 6"
-                    );
-                    this.setState({ phoneNum: "" });
-                    this.setState({ pass: "" });
-                  }
-                }}
-              >
-                Login
-              </button>
-            </Link>
+           {this.state.phoneNum.length === 10 && this.state.pass.length >= 6 ? (
+            <button
+            className={style.loginbutton}
+              onClick={() => {
+                  let token = `todo${this.state.phoneNum}todo${this.state.pass}`;
+                  localStorage.setItem("token", token);
+                  this.setState({ phoneNum: "" });
+                  this.setState({ pass: "" }); 
+              }
+            }
+            >
+              Login
+            </button>
+           ) : (
+             <button disabled={true} className={style.loginbuttondisabled}>Login</button>
+           )}
+             
           </div>
         </div>
       </form>

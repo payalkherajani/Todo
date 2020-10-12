@@ -10,15 +10,15 @@ _This Todo App is Completely written in React using Class based components_
 
 ---
 
-**Flow of Porject**
+**Flow of Project**
 
 ```
 1. src/App.js (Entry Point)
 2. AppRoutes (contains all Routes i.e Private and Non Private Routes)
-3. routes/Login is private route + start of project (Private Route)
+3. routes/Login is private route + start of project
 4. routes/SignUp (Non Private Route)
 5. Todo is Main Componet in routes/Todo
-5.Todo Element is Child of Todo components/TodoElemet
+6. Todo Element is Child of Todo components/TodoElement
 ```
 
 ---
@@ -27,10 +27,10 @@ _This Todo App is Completely written in React using Class based components_
 
 **Functionality**
 
-1. You can add a task
-2. delete a task
-3. edit a task
-4. mark as done
+1. You can add a task !
+2. delete a task !
+3. edit a task !
+4. mark as done !
 
 **Here is Demo**
 
