@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import style from "./style.module.css"
-import {Link} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -12,9 +12,10 @@ class Login extends Component {
         phoneNum: "",
         pass: ""
       }
+      
     };
   }
-
+ 
   handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -35,9 +36,21 @@ class Login extends Component {
     this.setState({ errors, [name]: value });
   };
 
+  tokengen = () => {
+    const { history } = this.props;
+    let token = `todo${this.state.phoneNum}todo${this.state.pass}`;
+    localStorage.setItem("token", token);
+    this.setState({ phoneNum: "" });
+    this.setState({ pass: "" });
+     history.push('/dashboard')
+  }
+  
+
   render() {
 
   const {formError} = this.state
+  const { history } = this.props;
+ 
 
     return (
       <div className={style.Loginmaindiv}>
@@ -74,13 +87,7 @@ class Login extends Component {
            {this.state.phoneNum.length === 10 && this.state.pass.length >= 6 ? (
             <button
             className={style.loginbutton}
-              onClick={() => {
-                  let token = `todo${this.state.phoneNum}todo${this.state.pass}`;
-                  localStorage.setItem("token", token);
-                  this.setState({ phoneNum: "" });
-                  this.setState({ pass: "" }); 
-              }
-            }
+              onClick={this.tokengen} 
             >
               Login
             </button>
@@ -96,4 +103,4 @@ class Login extends Component {
   }
 }
 
-export default Login 
+export default withRouter(Login); 
