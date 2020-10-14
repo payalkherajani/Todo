@@ -6,6 +6,7 @@ class Verification extends Component {
         this.state = {
             n: ""
         }
+      console.log(localStorage.getItem("verification"))
     }
 
     handleChange = (e) => {
@@ -15,6 +16,7 @@ class Verification extends Component {
 
     submit = () => {
     localStorage.setItem("code",this.state.n)
+    
     }
 
     render() {

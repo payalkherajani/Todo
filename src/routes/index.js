@@ -12,6 +12,7 @@ import Todo from "./Todo";
 import Login from "./Login";
 import Register from "./SignUp";
 import Verification from "./Verification"
+import history from "../history"
 
 const PrivateRoute = ({ component: Component, ...props }) => {
   const token = localStorage.getItem("token");
@@ -47,13 +48,13 @@ const NonPrivateRoute = ({ component: Component, ...props }) => {
 
 function AppRoutes() {
   return (
-    <Router>
+    <Router history={history}>
       <Switch>
         <NonPrivateRoute exact path="/" component={Login} />
         <NonPrivateRoute exact path="/login" component={Login} />
         <NonPrivateRoute exact path="/register" component={Register} />
-        <PrivateRoute exact path="/verification" component={Verification} />
-        <PrivateRoute exact path="/dashboard" component={Todo} />
+        <NonPrivateRoute exact path="/verification" component={Verification} />
+        <NonPrivateRoute exact path="/dashboard" component={Todo} />
       </Switch>
     </Router>
   );

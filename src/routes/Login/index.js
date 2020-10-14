@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import style from "./style.module.css"
-import { withRouter } from 'react-router-dom';
 import {loginUser} from '../../services/firebaseServices/auth'
 import firebase from "firebase";
+import {Link } from 'react-router-dom'
 
 
 class Login extends Component {
@@ -14,7 +14,9 @@ class Login extends Component {
       formError: {
         phoneNum: "",
         pass: ""
-      }
+      },
+      showVerficationbar: false,
+      verficationNum: ""
       
     };
   }
@@ -52,24 +54,39 @@ class Login extends Component {
     this.setState({ errors, [name]: value });
   };
 
-  tokengen = () => {
-   
-    const { history } = this.props;
+  tokengen = (e) => {
+    e.preventDefault()
     let token = `todo${this.state.phoneNum}todo${this.state.pass}`;
     // localStorage.setItem("token", token);
     loginUser(this.state.phoneNum,this.state.pass)
+    this.setState({showVerficationbar: true})
     this.setState({ phoneNum: "" });
     this.setState({ pass: "" });
-    // history.push('/dashboard')
   }
  
 
+ verificationhandleChange = (e) => {
+  this.setState({verficationNum: e.target.value})
+}
+
+verficationsubmit = (e) => {
+  e.preventDefault()
+const confirmationResult = window.confirmationResult
+let code = this.state.verficationNum
+console.log(code,confirmationResult)
+confirmationResult.confirm(code).then(function (result) {
+           alert("Logged In")
+           console.log(result)
+           }).catch(function (error) {
+           alert("Error In LogIn")
+           console.log(error)
+           });
+}
 
   render() {
 
+    console.log(this.state)
   const {formError} = this.state
-  const { history } = this.props;
- 
 
     return (
       <div className={style.Loginmaindiv}>
@@ -78,7 +95,7 @@ class Login extends Component {
           <div className={style.headingcontainer}>
             <h1 className={style.headinglogin}>login</h1>
           </div>
-          <div ref={(ref)=>this.recaptcha=ref}></div>
+          
           <div className={style.forminput}>
             <input
             className={style.inputlogin}
@@ -102,6 +119,7 @@ class Login extends Component {
             />
              {formError.pass.length > 0 && <span className={style.errorfield}>{formError.pass}</span>}
           </div>
+          <div ref={(ref)=>this.recaptcha=ref}></div>
           <div className={style.formbuttondiv}>
            {this.state.phoneNum.length === 10 && this.state.pass.length >= 6 ? (
             <button
@@ -116,11 +134,20 @@ class Login extends Component {
            )}
              
           </div>
+          
+            {this.state.showVerficationbar === true ? (
+              <div> 
+                <input type="number" onChange={this.verificationhandleChange}/>
+                <button onClick={this.verficationsubmit}>Submit</button>
+              </div>
+            ) : (<div> you wanna <Link to="/register">Register</Link>  ? </div>)}
+        
         </div>
       </form>
       </div>
     );
+
   }
 }
 
-export default withRouter(Login); 
+export default Login
