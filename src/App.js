@@ -9,17 +9,18 @@ class App extends Component {
     super(props)
   }
 
-componentDidMount() {
-firebase.auth().onAuthStateChanged(() => {
-  const token = localStorage.getItem("token");
-  if(token !== null){
-  console.log("Logged In")
-  }
-  else{
-  console.log("Logged out")
-  }
- })
-}
+// componentDidMount() {
+// firebase.auth().onAuthStateChanged(user => {
+//   console.log(user)
+//   const token = localStorage.getItem("token");
+//   if(token !== null){
+//   console.log("Logged In")
+//   }
+//   else{
+//   console.log("Logged out")
+//   }
+//  })
+// }
 
 
   render(){

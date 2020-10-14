@@ -11,6 +11,7 @@ import {
 import Todo from "./Todo";
 import Login from "./Login";
 import Register from "./SignUp";
+import Verification from "./Verification"
 
 const PrivateRoute = ({ component: Component, ...props }) => {
   const token = localStorage.getItem("token");
@@ -19,9 +20,9 @@ const PrivateRoute = ({ component: Component, ...props }) => {
       {...props}
       render={() => {
         if (token !== null) {
-          return <Component {...props} />;
+          return <Redirect to="/dashboard" />
         } else {
-          return <Redirect to="/login" />;
+          return <Component {...props} />;
         }
       }}
     />
@@ -51,6 +52,7 @@ function AppRoutes() {
         <NonPrivateRoute exact path="/" component={Login} />
         <NonPrivateRoute exact path="/login" component={Login} />
         <NonPrivateRoute exact path="/register" component={Register} />
+        <PrivateRoute exact path="/verification" component={Verification} />
         <PrivateRoute exact path="/dashboard" component={Todo} />
       </Switch>
     </Router>

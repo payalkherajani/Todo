@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import style from "./style.module.css"
 import { withRouter } from 'react-router-dom';
+import {loginUser} from '../../services/firebaseServices/auth'
+import firebase from "firebase";
+
 
 class Login extends Component {
   constructor(props) {
@@ -14,6 +17,19 @@ class Login extends Component {
       }
       
     };
+  }
+
+  componentDidMount() {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(this.recaptcha, {
+      'size': 'normal',
+      'callback': function (response) {
+        console.log(response)
+      },
+   });
+   window.recaptchaVerifier.render().then(function (widgetId) {
+     window.recaptchaWidgetId = widgetId;
+   });
+ 
   }
  
   handleChange = (e) => {
@@ -37,14 +53,17 @@ class Login extends Component {
   };
 
   tokengen = () => {
+   
     const { history } = this.props;
     let token = `todo${this.state.phoneNum}todo${this.state.pass}`;
-    localStorage.setItem("token", token);
+    // localStorage.setItem("token", token);
+    loginUser(this.state.phoneNum,this.state.pass)
     this.setState({ phoneNum: "" });
     this.setState({ pass: "" });
-     history.push('/dashboard')
+    // history.push('/dashboard')
   }
-  
+ 
+
 
   render() {
 
@@ -59,7 +78,7 @@ class Login extends Component {
           <div className={style.headingcontainer}>
             <h1 className={style.headinglogin}>login</h1>
           </div>
-
+          <div ref={(ref)=>this.recaptcha=ref}></div>
           <div className={style.forminput}>
             <input
             className={style.inputlogin}
@@ -86,13 +105,14 @@ class Login extends Component {
           <div className={style.formbuttondiv}>
            {this.state.phoneNum.length === 10 && this.state.pass.length >= 6 ? (
             <button
+            id="sign-in-button"
             className={style.loginbutton}
               onClick={this.tokengen} 
             >
               Login
             </button>
            ) : (
-             <button disabled={true} className={style.loginbuttondisabled}>Login</button>
+             <button id="sign-in-button" disabled={true} className={style.loginbuttondisabled}>Login</button>
            )}
              
           </div>
