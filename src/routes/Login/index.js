@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import style from "./style.module.css"
 import {loginUser} from '../../services/firebaseServices/auth'
 import firebase from "firebase";
-import {Link } from 'react-router-dom'
+import {Link, withRouter } from 'react-router-dom'
 
 
 class Login extends Component {
@@ -25,7 +25,7 @@ class Login extends Component {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(this.recaptcha, {
       'size': 'normal',
       'callback': function (response) {
-        console.log(response)
+      
       },
    });
    window.recaptchaVerifier.render().then(function (widgetId) {
@@ -56,12 +56,8 @@ class Login extends Component {
 
   tokengen = (e) => {
     e.preventDefault()
-    let token = `todo${this.state.phoneNum}todo${this.state.pass}`;
-    // localStorage.setItem("token", token);
     loginUser(this.state.phoneNum,this.state.pass)
     this.setState({showVerficationbar: true})
-    this.setState({ phoneNum: "" });
-    this.setState({ pass: "" });
   }
  
 
@@ -73,25 +69,31 @@ verficationsubmit = (e) => {
   e.preventDefault()
 const confirmationResult = window.confirmationResult
 let code = this.state.verficationNum
-console.log(code,confirmationResult)
+let token = `todo${this.state.phoneNum}todo`;
+this.setState({ phoneNum: "" });
+this.setState({ pass: "" });
+const { history } = this.props;
+
 confirmationResult.confirm(code).then(function (result) {
-           alert("Logged In")
-           console.log(result)
-           }).catch(function (error) {
+        localStorage.setItem("token", token);
+        if(history) history.push('/dashboard');
+       
+      }).catch(function (error) {
            alert("Error In LogIn")
            console.log(error)
+         
            });
 }
 
   render() {
-
-    console.log(this.state)
   const {formError} = this.state
 
     return (
       <div className={style.Loginmaindiv}>
       <form className={style.formdiv}>
+
         <div className={style.containerlogin}>
+          
           <div className={style.headingcontainer}>
             <h1 className={style.headinglogin}>login</h1>
           </div>
@@ -108,6 +110,7 @@ confirmationResult.confirm(code).then(function (result) {
             />
             {formError.phoneNum.length > 0 && <span className={style.errorfield}>{formError.phoneNum}</span>}
           </div>
+
           <div className={style.forminput}>
             <input
             className={style.inputlogin}
@@ -119,7 +122,9 @@ confirmationResult.confirm(code).then(function (result) {
             />
              {formError.pass.length > 0 && <span className={style.errorfield}>{formError.pass}</span>}
           </div>
-          <div ref={(ref)=>this.recaptcha=ref}></div>
+
+          <div ref={(ref)=>this.recaptcha=ref} style={{padding: "1rem",display: "flex",justifyContent: "center"}}></div>
+
           <div className={style.formbuttondiv}>
            {this.state.phoneNum.length === 10 && this.state.pass.length >= 6 ? (
             <button
@@ -132,15 +137,15 @@ confirmationResult.confirm(code).then(function (result) {
            ) : (
              <button id="sign-in-button" disabled={true} className={style.loginbuttondisabled}>Login</button>
            )}
-             
+             <span> Already have a account <Link to="/register">Register</Link> ?</span>
           </div>
           
-            {this.state.showVerficationbar === true ? (
+            {this.state.showVerficationbar === true  && (
               <div> 
                 <input type="number" onChange={this.verificationhandleChange}/>
                 <button onClick={this.verficationsubmit}>Submit</button>
               </div>
-            ) : (<div> you wanna <Link to="/register">Register</Link>  ? </div>)}
+            )  (<div></div>)}
         
         </div>
       </form>
@@ -150,4 +155,4 @@ confirmationResult.confirm(code).then(function (result) {
   }
 }
 
-export default Login
+export default withRouter(Login)
