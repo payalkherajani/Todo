@@ -3,20 +3,26 @@ import style from "./style.module.css"
 import {loginUser} from '../../services/firebaseServices/auth'
 import firebase from "firebase";
 import {Link, withRouter } from 'react-router-dom'
+import firebaseConfig from '../../components/Firebase/index'
 
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+var db = firebase.firestore();
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       phoneNum: "",
-      pass: "",
       formError: {
         phoneNum: "",
-        pass: ""
       },
       showVerficationbar: false,
       verficationNum: ""
+    
       
     };
   }
@@ -25,7 +31,6 @@ class Login extends Component {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(this.recaptcha, {
       'size': 'normal',
       'callback': function (response) {
-      
       },
    });
    window.recaptchaVerifier.render().then(function (widgetId) {
@@ -43,9 +48,6 @@ class Login extends Component {
       case 'phoneNum':
         errors.phoneNum = value.length < 10 ? ('Phone Number Should be 10-digit long') : ('')
         break;
-      case 'pass':
-        errors.pass = value.length < 6 ? ('Password Should be of Minimum length 6') : ('')
-        break;
       default: 
       break;
     }
@@ -56,7 +58,7 @@ class Login extends Component {
 
   tokengen = (e) => {
     e.preventDefault()
-    loginUser(this.state.phoneNum,this.state.pass)
+    loginUser(this.state.phoneNum)
     this.setState({showVerficationbar: true})
   }
  
@@ -70,18 +72,15 @@ verficationsubmit = (e) => {
 const confirmationResult = window.confirmationResult
 let code = this.state.verficationNum
 let token = `todo${this.state.phoneNum}todo`;
-this.setState({ phoneNum: "" });
-this.setState({ pass: "" });
 const { history } = this.props;
 
 confirmationResult.confirm(code).then(function (result) {
-        localStorage.setItem("token", token);
-        if(history) history.push('/dashboard');
-       
+      
+        // localStorage.setItem("token", token);
+        // if(history) history.push({pathname: '/dashboard'}); 
       }).catch(function (error) {
            alert("Error In LogIn")
            console.log(error)
-         
            });
 }
 
@@ -111,22 +110,10 @@ confirmationResult.confirm(code).then(function (result) {
             {formError.phoneNum.length > 0 && <span className={style.errorfield}>{formError.phoneNum}</span>}
           </div>
 
-          <div className={style.forminput}>
-            <input
-            className={style.inputlogin}
-            placeholder="Password"
-             type="password"
-              name="pass"
-              value={this.state.pass}
-              onChange={this.handleChange}
-            />
-             {formError.pass.length > 0 && <span className={style.errorfield}>{formError.pass}</span>}
-          </div>
-
           <div ref={(ref)=>this.recaptcha=ref} style={{padding: "1rem",display: "flex",justifyContent: "center"}}></div>
 
           <div className={style.formbuttondiv}>
-           {this.state.phoneNum.length === 10 && this.state.pass.length >= 6 ? (
+           {this.state.phoneNum.length === 10 ? (
             <button
             id="sign-in-button"
             className={style.loginbutton}
@@ -145,7 +132,7 @@ confirmationResult.confirm(code).then(function (result) {
                 <input type="number" onChange={this.verificationhandleChange}/>
                 <button onClick={this.verficationsubmit}>Submit</button>
               </div>
-            )  (<div></div>)}
+            ) }
         
         </div>
       </form>

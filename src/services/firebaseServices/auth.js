@@ -1,8 +1,8 @@
 import firebase from "firebase";
-import history from '../../history'
 
 
-export const loginUser = (phoneNum,pass) => {
+
+export const loginUser = (phoneNum) => {
 
 const PhoneNumber =`+91${phoneNum}`
 

@@ -1,36 +1,44 @@
-import React from "react";
+import React,{Component} from "react";
 import style from "./style.module.css"
 
-const Register = () => {
+class Register extends Component{
 
-  return (
-    <div className={style.Registermaindiv}>
-    <form className={style.formdiv}>
-      <div className={style.containerregister}>
-        <div className={style.headingcontainer}>
-          <h1 className={style.headingregister}>register</h1>
-        </div>
+  constructor(props){
+    super(props)
+    
+  }
 
-        <div className={style.forminput}>
-          <input className={style.inputregister} type="text" placeholder="Full Name"/>
+  render(){
+    return (
+      <div className={style.Registermaindiv}>
+      <form className={style.formdiv}>
+        <div className={style.containerregister}>
+          <div className={style.headingcontainer}>
+            <h1 className={style.headingregister}>register</h1>
+          </div>
+  
+          <div className={style.forminput}>
+            <input className={style.inputregister} type="text" placeholder="Full Name"/>
+          </div>
+  
+          <div className={style.forminput}>
+            <input className={style.inputregister}  type="email" placeholder="Email"/>
+          </div>
+  
+          <div className={style.forminput} >
+            <input className={style.inputregister} type="number" placeholder="Phone Number"/>
+          </div>
+          <div className={style.formbuttondiv}>
+            <button className={style.registerbutton}>
+              Register
+            </button>
+          </div>
         </div>
-
-        <div className={style.forminput}>
-          <input className={style.inputregister}  type="email" placeholder="Email"/>
-        </div>
-
-        <div className={style.forminput} >
-          <input className={style.inputregister} type="number" placeholder="Phone Number"/>
-        </div>
-        <div className={style.formbuttondiv}>
-          <button className={style.registerbutton}>
-            Register
-          </button>
-        </div>
+      </form>
       </div>
-    </form>
-    </div>
-  );
+    );
+  }
+  
 };
 
 export default Register;

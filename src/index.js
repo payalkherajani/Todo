@@ -9,6 +9,8 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+
+//Just for testing purpose
 ReactDOM.render(
   <React.StrictMode>
     <App />
