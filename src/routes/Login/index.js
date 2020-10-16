@@ -68,35 +68,23 @@ class Login extends Component {
   this.setState({verficationNum: e.target.value})
 }
 
-verficationsubmit = (e) => {
+verficationsubmit = (e,s) => {
   e.preventDefault()
 const confirmationResult = window.confirmationResult
 let code = this.state.verficationNum
 let token = `todo${this.state.phoneNum}todo`;
 const { history } = this.props;
-var singleUser = db.collection("Users").doc(this.state.phoneNum)
 
-confirmationResult.confirm(code).then(function (result) {
- 
-    
-  singleUser.get().then(function(doc) {
 
-    if (doc.exists) {
-      localStorage.setItem("token", token);
-      history.push({pathname: '/dashboard',state: {detail: doc.data() }}); 
- 
-  } else {
-      alert("No Account with this Number")
-  }
+confirmationResult.confirm(code)
 
-  }).catch(function(error) {
-    console.log("Error getting document:", error);
+.then(function (result) {
+   console.log(s)
   })
-   
-      }).catch(function (error) {
-           alert("Error In LogIn")
-           console.log(error)
-           });
+.catch(function (error) {
+  alert("Error In LogIn")
+  console.log(error)
+});
 
 this.setState({phoneNum: "",verficationNum: "",showVerficationbar: false})
 }
@@ -147,7 +135,7 @@ this.setState({phoneNum: "",verficationNum: "",showVerficationbar: false})
             {this.state.showVerficationbar === true  && (
               <div> 
                 <input type="number" onChange={this.verificationhandleChange}/>
-                <button onClick={this.verficationsubmit}>Submit</button>
+                <button onClick={(e) => this.verficationsubmit(e,this.state)}>Submit</button>
               </div>
             ) }
         

@@ -1,49 +1,53 @@
 import React,{Component} from "react";
 import style from "./style.module.css"
-import {withRouter } from 'react-router-dom'
+
+
+
+// import {withRouter } from 'react-router-dom'
+
 //firebase
-import firebaseConfig from '../../components/Firebase/index'
-import firebase from "firebase";
+// import firebaseConfig from '../../components/Firebase/index'
+// import firebase from "firebase";
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// }
 
-var db = firebase.firestore();
+// var db = firebase.firestore();
 
 class Register extends Component{
 
   constructor(props){
     super(props)
-    this.state = {
-      fullName: "",
-      email:  "",
-      phoneNum:  "",
-    }
+    // this.state = {
+    //   fullName: "",
+    //   email:  "",
+    //   phoneNum:  "",
+    // }
 
   }
 
-  handleChange = (e) => {
-  let name = e.target.name;
-  let value = e.target.value;
+  //  handleChange = (e) => {
+  // let name = e.target.name;
+  // let value = e.target.value;
 
-  this.setState({[name]: value})
-  }
+  // this.setState({[name]: value})
+  // }
 
-  handleSubmit = (e) => {
-    const { history } = this.props;
-    e.preventDefault()
-   db.collection('Users').doc(this.state.phoneNum).set({
-    name: this.state.fullName,
-    phonenumber: this.state.phoneNum,
-    email: this.state.email
-  })
-  const token = `todo${this.state.phoneNum}todo`
-  localStorage.setItem("token",token)
-  history.push({pathname: "/dashboard", state: {detail: this.state }})
-  this.setState({fullName: "" , phoneNum: "",email: ""})
+  // handleSubmit = (e) => {
+  //   const { history } = this.props;
+  //   e.preventDefault()
+  //  db.collection('Users').doc(this.state.phoneNum).set({
+  //   name: this.state.fullName,
+  //   phonenumber: this.state.phoneNum,
+  //   email: this.state.email
+  // })
+  // const token = `todo${this.state.phoneNum}todo`
+  // localStorage.setItem("token",token)
+  // history.push({pathname: "/dashboard", state: {detail: this.state }})
+  // this.setState({fullName: "" , phoneNum: "",email: ""})
   
-  }
+  // }
 
   render(){
   
@@ -56,28 +60,20 @@ class Register extends Component{
           </div>
   
           <div className={style.forminput}>
-            <input className={style.inputregister} name="fullName" type="text" placeholder="Full Name" onChange={this.handleChange}/>
+            <input className={style.inputregister} name="fullName" type="text" placeholder="Full Name" />
           </div>
   
           <div className={style.forminput}>
-            <input className={style.inputregister} name="email" type="email" placeholder="Email" onChange={this.handleChange}/>
+            <input className={style.inputregister} name="email" type="email" placeholder="Email" />
           </div>
   
           <div className={style.forminput} >
-            <input className={style.inputregister} name="phoneNum" type="number" placeholder="Phone Number"onChange={this.handleChange}/>
+            <input className={style.inputregister} name="phoneNum" type="number" placeholder="Phone Number"/>
           </div>
           <div className={style.formbuttondiv}>
-            {
-            this.state.phoneNum.length === 10 && this.state.fullName !== "" && this.state.email !== "" ? (
-            <button className={style.registerbutton} onClick={this.handleSubmit}>
+            <button className={style.registerbutton}>
               Register
-            </button>
-            ) : (
-            <button disabled={true} className={style.registerbutton} style={{opacity:"0.5"}}>
-              Register
-            </button>)
-            }
-            
+            </button> 
           </div>
         </div>
       </form>
@@ -87,4 +83,4 @@ class Register extends Component{
   
 };
 
-export default withRouter(Register)
+export default Register

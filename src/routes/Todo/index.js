@@ -2,6 +2,15 @@ import React, { Component } from "react";
 import TodoElement from "../../components/TodoElement/TodoElement.js"
 import { Redirect } from "react-router-dom";
 import style from "./style.module.css"
+import firebase from "firebase";
+import firebaseConfig from '../../components/Firebase/index'
+
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+var db = firebase.firestore();
+
 
 class Todo extends Component {
   constructor(props) {
@@ -14,7 +23,7 @@ class Todo extends Component {
     };
     console.log(this.props)
   }
-
+  
   TodoFunction = () => {
     let todoitems;
     if (this.state.value === 0) {
@@ -66,11 +75,17 @@ class Todo extends Component {
       task: "",
       value: 0
     });
+    db.collection("Users").doc(this.props.location.state.detail.phonenumber).set(
+      {todos: newtodo }, { merge: true }
+   )
   };
 
   deleteTask = (cid) => {
     const delTodo = [...this.state.todo].filter((dtod) => dtod.id !== cid);
     this.setState({ todo: delTodo });
+    db.collection("Users").doc(this.props.location.state.detail.phonenumber).set(
+      {todos: delTodo }, { merge: true }
+   )
   };
 
   editTodo = (cid, val) => {
@@ -84,15 +99,21 @@ class Todo extends Component {
     this.setState({
       todo: edTodo,
     });
+    db.collection("Users").doc(this.props.location.state.detail.phonenumber).set(
+      {todos: edTodo }, { merge: true }
+   )
   };
 
   logout = () => {
     localStorage.clear("token");
     this.setState({ navigate: true });
   };
+ 
+  
 
   render() {
     const todoitems = this.TodoFunction();
+    
 
     const { navigate } = this.state;
     if (navigate) {
