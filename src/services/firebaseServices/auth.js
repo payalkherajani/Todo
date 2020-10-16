@@ -11,7 +11,6 @@ var appVerifier = window.recaptchaVerifier;
 
 firebase.auth().signInWithPhoneNumber(PhoneNumber, appVerifier)
     .then(function (confirmationResult) {
-       console.log(confirmationResult)
       window.confirmationResult = confirmationResult
      
     }).catch(function (error) {
