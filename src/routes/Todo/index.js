@@ -12,6 +12,7 @@ class Todo extends Component {
       task: "",
       navigate: false,
     };
+    console.log(this.props)
   }
 
   TodoFunction = () => {
@@ -100,7 +101,7 @@ class Todo extends Component {
 
     return (
       <div className={style.todomaindiv}>
-        <div className={style.name}><strong>{this.props.location.state.detail.name} </strong></div>
+        <div className={style.name}><strong>{this.props.location.state.detail.name} {this.props.location.state.detail.fullName} </strong></div>
         <div className={style.todologoutdiv}>
           {" "}
           <button onClick={this.logout} className={style.todologoutbutton}> {" "}

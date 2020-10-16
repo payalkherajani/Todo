@@ -61,7 +61,6 @@ class Login extends Component {
     //Condition if user exists then send otp otherwise tell user to register with number
     loginUser(this.state.phoneNum)
     this.setState({showVerficationbar: true})
-  
   }
  
 
@@ -98,6 +97,8 @@ confirmationResult.confirm(code).then(function (result) {
            alert("Error In LogIn")
            console.log(error)
            });
+
+this.setState({phoneNum: "",verficationNum: "",showVerficationbar: false})
 }
 
   render() {
