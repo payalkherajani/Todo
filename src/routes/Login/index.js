@@ -58,7 +58,6 @@ class Login extends Component {
 
   tokengen = (e) => {
     e.preventDefault()
-    //Condition if user exists then send otp otherwise tell user to register with number
     loginUser(this.state.phoneNum)
     this.setState({showVerficationbar: true})
   }
@@ -72,7 +71,7 @@ verficationsubmit = (e,s) => {
   e.preventDefault()
 const confirmationResult = window.confirmationResult
 let code = this.state.verficationNum
-let token = `todo${this.state.phoneNum}todo`;
+
 const { history } = this.props;
 
 
@@ -80,13 +79,19 @@ confirmationResult.confirm(code)
 
 .then(function (result) {
    console.log(s)
+      db.collection('Users').doc(s.phoneNum).set(
+        { phonenumber: s.phoneNum } 
+      )
+      let token = `todo${s.phoneNum}todo`;
+      localStorage.setItem("token",token)
+      history.push({pathname: "/dashboard", state: {detail: s.phoneNum}})
   })
 .catch(function (error) {
   alert("Error In LogIn")
   console.log(error)
 });
+this.setState({phoneNum: "",showVerficationbar: "false",verficationNum: ""})
 
-this.setState({phoneNum: "",verficationNum: "",showVerficationbar: false})
 }
 
   render() {

@@ -75,7 +75,7 @@ class Todo extends Component {
       task: "",
       value: 0
     });
-    db.collection("Users").doc(this.props.location.state.detail.phonenumber).set(
+    db.collection("Users").doc(this.props.location.state.detail).set(
       {todos: newtodo }, { merge: true }
    )
   };
@@ -83,7 +83,7 @@ class Todo extends Component {
   deleteTask = (cid) => {
     const delTodo = [...this.state.todo].filter((dtod) => dtod.id !== cid);
     this.setState({ todo: delTodo });
-    db.collection("Users").doc(this.props.location.state.detail.phonenumber).set(
+    db.collection("Users").doc(this.props.location.state.detail).set(
       {todos: delTodo }, { merge: true }
    )
   };
@@ -99,7 +99,7 @@ class Todo extends Component {
     this.setState({
       todo: edTodo,
     });
-    db.collection("Users").doc(this.props.location.state.detail.phonenumber).set(
+    db.collection("Users").doc(this.props.location.state.detail).set(
       {todos: edTodo }, { merge: true }
    )
   };
@@ -122,7 +122,7 @@ class Todo extends Component {
 
     return (
       <div className={style.todomaindiv}>
-        <div className={style.name}><strong>{this.props.location.state.detail.name} {this.props.location.state.detail.fullName} </strong></div>
+        <div className={style.name}><strong>{this.props.location.state.detail}</strong></div>
         <div className={style.todologoutdiv}>
           {" "}
           <button onClick={this.logout} className={style.todologoutbutton}> {" "}
