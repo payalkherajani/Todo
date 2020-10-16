@@ -12,6 +12,7 @@ class Todo extends Component {
       task: "",
       navigate: false,
     };
+    console.log(this.props)
   }
 
   TodoFunction = () => {

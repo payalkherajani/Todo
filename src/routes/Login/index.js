@@ -58,8 +58,10 @@ class Login extends Component {
 
   tokengen = (e) => {
     e.preventDefault()
+    //Condition if user exists then send otp otherwise tell user to register with number
     loginUser(this.state.phoneNum)
     this.setState({showVerficationbar: true})
+  
   }
  
 
@@ -73,11 +75,25 @@ const confirmationResult = window.confirmationResult
 let code = this.state.verficationNum
 let token = `todo${this.state.phoneNum}todo`;
 const { history } = this.props;
+var singleUser = db.collection("Users").doc(this.state.phoneNum)
 
 confirmationResult.confirm(code).then(function (result) {
-      
-        // localStorage.setItem("token", token);
-        // if(history) history.push({pathname: '/dashboard'}); 
+ 
+    
+  singleUser.get().then(function(doc) {
+
+    if (doc.exists) {
+      localStorage.setItem("token", token);
+      history.push({pathname: '/dashboard',state: {detail: doc.data() }}); 
+ 
+  } else {
+      alert("No Account with this Number")
+  }
+
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  })
+   
       }).catch(function (error) {
            alert("Error In LogIn")
            console.log(error)
